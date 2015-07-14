@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% block htmltitle %}
+<title>Funcionarios </title>
+{%endblock%}
+{% block extrastyle %}
+{%endblock%}
+{%block titulo-pagina%}
+    <h1 class="page-header">Funcionários</h1>
+{%endblock%}
+{%block breadcrumb%}
+    <li><a href="/">Início</a></li>
+    <li>Funcionários</li>
+{%endblock%}
+{% block content %}
+    
+<div class="panel panel-inverse">
+                <div class="panel-heading">
+        <div class="panel-heading-btn">
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+        </div>
+        <h4 class="panel-title">Todos os Funcionários</h4>
+    </div>
+    <div class="panel-body">
+        <a class="btn btn-success" href="{% url 'funcionarios:funcionario_novo' %}">Novo&nbsp;&nbsp;<i class="fa fa-plus"></i></a>
+    
+        <br /><br />
+        {% if funcionarios %}
+        <div class="panel panel-default">
+            
+            <div class="panel-body ">
+                <table class="table table-bordered" id="hidden-table-info">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th class="td-edit" colspan="2">Status</th>
+                            <th class="td-edit">Editar</th>  
+                        </tr>                  
+                    </thead>
+                    <tbody>
+                    {%if funcionarios%}
+                        {%for funcionario in funcionarios%}
+                   
+                        <tr>
+                            <td><strong>{{funcionario.nome}}</strong></td>
+                            <td>
+                                {%if funcionario.cpf%}
+                                   <span class="cpf">{{funcionario.cpf}}</span>
+                                {%else%}
+                                    ---.---.------
+                                {%endif%}
+                            </td>
+                            {%if  funcionario.ativo == True%}
+                                <td class="td-edit">
+                                    <span class="badge alert-success">Ativado</span>
+                                </td>
+                                <td class="td-edit">
+                                    <a onclick="return confirm('Tem certeza que deseja desativar o funcionario ?')" href="{%url 'funcionarios:funcionario_alterar_status' id_funcionario=funcionario.id%}" data-toggle="tooltip" data-placement="top" title="Desativar o Funcionário"><i class="fa fa-toggle-on"></i></a>
+                                </td>
+                            {%else%}
+                                <td class="td-edit">
+                                    <span class="badge alert-danger">Desativado</span>                                
+                                </td>
+                                <td class="td-edit">
+                                    <a onclick="return confirm('Tem certeza que deseja ativar o funcionario?')" href="{%url 'funcionarios:funcionario_alterar_status' id_funcionario=funcionario.id%}" data-toggle="tooltip" data-placement="top" title="Ativar o Funcionário"><i class="fa fa-toggle-off"></i></a>
+                                </td>
+                            {%endif%} 
+                                <td class="td-edit">
+                                    <a href="{% url 'funcionarios:funcionario_editar' id_funcionario=funcionario.id %}" data-toggle="tooltip" data-placement="top" title="Editar o Funcionário"><span class="fa fa-pencil-square-o"></span></a>
+                                </td>
+                                
+                        </tr>          
+                   
+                        {%endfor%}
+                    {%endif%}
+                    </tbody>
+                </table>
+            </div>    
+        </div>
+        {% else %}
+        <h4 class="alert alert-warning"><center>Nenhum Funcionário Encontrado.</center></h4>
+        {% endif %}
+    </div>
+</div>
+    
+    
+
+    
+
+    
+{%endblock%}
+{%block js%}
+{% load staticfiles %}
+    <script src="{% static 'js/jquery.dataTables.js'%}" type="text/javascript" ></script>
+    <script src="{% static 'js/DT_bootstrap.js' %}" type="text/javascript" ></script>
+<script >
+    jQuery(document).ready(function(){
+    
+        function cpf_mask(v){
+            v=v.replace(/\D/g,"")                 //Remove tudo o que não é dígito
+            v=v.replace(/(\d{3})(\d)/,"$1.$2")    //Coloca ponto entre o terceiro e o quarto dígitos
+            v=v.replace(/(\d{3})(\d)/,"$1.$2")    //Coloca ponto entre o setimo e o oitava dígitos
+            v=v.replace(/(\d{3})(\d)/,"$1-$2")   //Coloca ponto entre o decimoprimeiro e o decimosegundo dígitos
+            return v
+        }
+
+
+        // Aplicando a mascara do CPF    
+          $( ".cpf" ).each(function() {
+            $(this).text( cpf_mask($(this).text()) );
+        });
+
+        $('[data-toggle="tooltip"]').tooltip();
+                       
+    });
+      $(document).ready(function() {
+          var oTable = $('#hidden-table-info').dataTable( {
+              "aoColumnDefs": [
+                  { "bSortable": false, "aTargets": [ 3 ] }
+              ],
+              "aaSorting": [[0, 'desc']]
+          });
+      } );
+
+
+    </script>
+{%endblock%}
