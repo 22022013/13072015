@@ -28,6 +28,7 @@ INSTALLED_APPS = (
     'core',
     'funcionarios',
     'materiais',
+    'servicos',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 {% block htmltitle %}
-<title>Funcionarios </title>
+<title>Serviços </title>
 {%endblock%}
 {% block extrastyle %}
 {%endblock%}
 {%block titulo-pagina%}
-    <h1 class="page-header">Funcionários</h1>
+    <h1 class="page-header">Serviços</h1>
 {%endblock%}
 {%block breadcrumb%}
     <li><a href="/">Início</a></li>
-    <li>Funcionários</li>
+    <li><a href="{%url 'servicos:servicos'%}">Serviços</a></li>
+    <li>Tipos de Serviço</li>
 {%endblock%}
 {% block content %}
     
@@ -20,13 +21,14 @@
             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
         </div>
-        <h4 class="panel-title">Todos os Funcionários</h4>
+        <h4 class="panel-title">Tipos de Serviço</h4>
     </div>
     <div class="panel-body">
-        <a class="btn btn-success" href="{% url 'funcionarios:funcionario_novo' %}">Cadastrar&nbsp;&nbsp;<i class="fa fa-plus"></i></a>
+        <a class="btn btn-primary" href="{% url 'servicos:servicos' %}"><i class="fa fa-list"></i>&nbsp;&nbsp;Serviços</a>
+        <a class="btn btn-success" href="{% url 'servicos:tipo_servico_novo' %}">Cadastrar&nbsp;&nbsp;<i class="fa fa-plus"></i></a>
     
         <br /><br />
-        {% if funcionarios %}
+        {% if tipos_servico %}
         <div class="panel panel-default">
             
             <div class="panel-body ">
@@ -34,53 +36,30 @@
                     <thead>
                         <tr>
                             <th>Nome</th>
-                            <th>CPF</th>
-                            <th class="td-edit" colspan="2">Status</th>
                             <th class="td-edit">Editar</th>  
+                            <th class="td-edit">Apagar</th>
                         </tr>                  
                     </thead>
                     <tbody>
-                    {%if funcionarios%}
-                        {%for funcionario in funcionarios%}
+                        {%for tipo_servico in tipos_servico%}
                    
                         <tr>
-                            <td><strong>{{funcionario.nome}}</strong></td>
-                            <td>
-                                {%if funcionario.cpf%}
-                                   <span class="cpf">{{funcionario.cpf}}</span>
-                                {%else%}
-                                    ---.---.------
-                                {%endif%}
+                            <td><strong>{{tipo_servico.nome}}</strong></td>
+                            <td class="td-edit">
+                                <a href="{% url 'servicos:tipo_servico_editar' tipo_servico_id=tipo_servico.id %}" data-toggle="tooltip" data-placement="top" title="Editar o Tipo de Serviço"><span class="fa fa-pencil-square-o"></span></a>
                             </td>
-                            {%if  funcionario.ativo == True%}
-                                <td class="td-edit">
-                                    <span class="badge alert-success">Ativado</span>
-                                </td>
-                                <td class="td-edit">
-                                    <a class="alterar-status" href="{%url 'funcionarios:funcionario_alterar_status' id_funcionario=funcionario.id%}" data-toggle="tooltip" data-placement="top" title="Desativar o Funcionário"><i class="fa fa-toggle-on"></i></a>
-                                </td>
-                            {%else%}
-                                <td class="td-edit">
-                                    <span class="badge alert-danger">Desativado</span>                                
-                                </td>
-                                <td class="td-edit">
-                                    <a class="alterar-status" href="{%url 'funcionarios:funcionario_alterar_status' id_funcionario=funcionario.id%}" data-toggle="tooltip" data-placement="top" title="Ativar o Funcionário"><i class="fa fa-toggle-off"></i></a>
-                                </td>
-                            {%endif%} 
-                                <td class="td-edit">
-                                    <a href="{% url 'funcionarios:funcionario_editar' id_funcionario=funcionario.id %}" data-toggle="tooltip" data-placement="top" title="Editar o Funcionário"><span class="fa fa-pencil-square-o"></span></a>
-                                </td>
-                                
+                            <td class="td-edit">
+                                <a class="alterar-status" href="{%url 'servicos:tipo_servico_alterar_status' tipo_servico_id=tipo_servico.id%}" data-toggle="tooltip" data-placement="top" title="Remover o Tipo de Serviço"><i class="fa fa-trash-o"></i></a>
+                            </td>
                         </tr>          
-                   
                         {%endfor%}
-                    {%endif%}
+                   
                     </tbody>
                 </table>
             </div>    
         </div>
         {% else %}
-        <h4 class="alert alert-warning"><center>Nenhum Funcionário Encontrado.</center></h4>
+        <h4 class="alert alert-warning"><center>Nenhum Serviço Encontrado.</center></h4>
         {% endif %}
     </div>
 </div>
@@ -115,7 +94,7 @@
         $('.alterar-status').click(function (e) {
             e.preventDefault();
             request_url = this.href;
-            bootbox.confirm('Tem certeza que deseja alterar o status desse funcionário?', function(confirmed) {
+            bootbox.confirm('Tem certeza que deseja apagar esse tipo de serviço?', function(confirmed) {
                 if(confirmed) {
                     document.location.href = request_url;
                 }
@@ -125,9 +104,9 @@
       $(document).ready(function() {
           var oTable = $('#hidden-table-info').dataTable( {
               "aoColumnDefs": [
-                  { "bSortable": false, "aTargets": [ 3 ] }
+                  { "bSortable": false, "aTargets": [ 1] }
               ],
-              "aaSorting": [[1, 'desc']]
+              "aaSorting": [[0, 'asc']]
           });
       } );
 

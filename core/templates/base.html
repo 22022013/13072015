@@ -26,7 +26,9 @@
     <link href="{% static 'css/principal.css' %}" rel="stylesheet"  />
     <link href="{% static 'css/pagination.css' %}" rel="stylesheet" type="text/css" />
     <!-- ================== END BASE CSS STYLE ================== -->
-    
+    {% block extrastyle %}
+        
+    {%endblock%}
     <!-- ================== BEGIN BASE JS ================== -->
     <script src="{% static 'plugins/pace/pace.min.js' %}"></script>
     <script src="{% static 'plugins/jquery/jquery-1.9.1.min.js' %}"></script>
@@ -164,8 +166,9 @@
                             <li><a href="">Dashboard v2</a></li>
                         </ul>
                     </li>
-                    <li><a href="{%url 'funcionarios:funcionarios'%}"><i class="fa fa-users"></i> <span>Fúncionarios</span></a></li>
-                    <li><a href="{%url 'materiais:materiais'%}"><i class="fa fa-users"></i> <span>Materiais</span></a></li>
+                    <li><a href="{%url 'funcionarios:funcionarios'%}"><i class="fa fa-users"></i> <span>Funcionarios</span></a></li>
+                    <li><a href="{%url 'materiais:materiais'%}"><i class="fa fa-users"></i><span>Materiais</span></a></li>
+                    <li><a href="{%url 'servicos:servicos'%}"><i class="fa fa-users"></i><span>Serviços</span></a></li>
                     <li class="has-sub">
                         <a href="javascript:;">
                             <span class="badge pull-right">10</span>
@@ -521,6 +524,7 @@
  
     <script src="{% static 'plugins/jquery-ui/ui/minified/jquery-ui.min.js' %}"></script>
     <script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootbox.min.js' %}"></script>
     <script src="{% static 'js/jquery.maskedinput.js' %}"></script>
     <!--[if lt IE 9]>
         <script src="{% static 'crossbrowserjs/html5shiv.js' %}"></script>

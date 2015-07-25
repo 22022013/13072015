@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block htmltitle %}
-<title>Funcionarios </title>
+<title>Materiais </title>
 {%endblock%}
 {% block extrastyle %}
 {%endblock%}
@@ -57,10 +57,10 @@
                                 {{material.estoque_atual}}
                             </td>
                             <td class="td-edit">
-                                <a href="{% url 'materiais:material_editar' material_id=material.id %}" data-toggle="tooltip" data-placement="top" title="Editar o Material"><span class="fa fa-pencil-square-o"></span></a>
+                                <a  href="{% url 'materiais:material_editar' material_id=material.id %}" data-toggle="tooltip" data-placement="top" title="Editar o Material"><span class="fa fa-pencil-square-o"></span></a>
                             </td>
                             <td class="td-edit">
-                                <a onclick="return confirm('Tem certeza que deseja excluir o material ?')" href="{%url 'materiais:material_alterar_status' material_id=material.id%}" data-toggle="tooltip" data-placement="top" title="Remover Material"><i class="fa fa-trash-o"></i></a>
+                                <a class="apagar-material" href="{%url 'materiais:material_alterar_status' material_id=material.id%}" data-toggle="tooltip" data-placement="top" title="Remover Material"><i class="fa fa-trash-o"></i></a>
                             </td>
                                 
                                 
@@ -90,10 +90,17 @@
     <script src="{% static 'js/DT_bootstrap.js' %}" type="text/javascript" ></script>
 <script >
     jQuery(document).ready(function(){
-    
-        
         $('[data-toggle="tooltip"]').tooltip();
-                       
+        $('.apagar-material').click(function (e) {
+            e.preventDefault();
+            request_url = this.href;
+            bootbox.confirm('Tem certeza que deseja apagar esse material?', function(confirmed) {
+                if(confirmed) {
+                    document.location.href = request_url;
+                }
+            });
+        });          
+
     });
       $(document).ready(function() {
           var oTable = $('#hidden-table-info').dataTable( {
