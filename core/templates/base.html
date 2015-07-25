@@ -29,6 +29,8 @@
     
     <!-- ================== BEGIN BASE JS ================== -->
     <script src="{% static 'plugins/pace/pace.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery/jquery-1.9.1.min.js' %}"></script>
+    <script src="{% static 'plugins/jquery/jquery-migrate-1.1.0.min.js' %}"></script>
     <!-- ================== END BASE JS ================== -->
 </head>
 <body>
@@ -155,13 +157,15 @@
                         <a href="javascript:;">
                             <b class="caret pull-right"></b>
                             <i class="fa fa-laptop"></i>
-                            <span>Dashboard</span>
+                            <span>Fúncionarios</span>
                         </a>
                         <ul class="sub-menu">
-                            <li><a href="index.html">Dashboard v1</a></li>
-                            <li><a href="index_v2.html">Dashboard v2</a></li>
+                            <li><a href="">Listagem</a></li>
+                            <li><a href="">Dashboard v2</a></li>
                         </ul>
                     </li>
+                    <li><a href="{%url 'funcionarios:funcionarios'%}"><i class="fa fa-users"></i> <span>Fúncionarios</span></a></li>
+                    <li><a href="{%url 'materiais:materiais'%}"><i class="fa fa-users"></i> <span>Materiais</span></a></li>
                     <li class="has-sub">
                         <a href="javascript:;">
                             <span class="badge pull-right">10</span>
@@ -514,8 +518,7 @@
     <!-- end page container -->
     {% load staticfiles %}
     <!-- ================== BEGIN BASE JS ================== -->
-    <script src="{% static 'plugins/jquery/jquery-1.9.1.min.js' %}"></script>
-    <script src="{% static 'plugins/jquery/jquery-migrate-1.1.0.min.js' %}"></script>
+ 
     <script src="{% static 'plugins/jquery-ui/ui/minified/jquery-ui.min.js' %}"></script>
     <script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery.maskedinput.js' %}"></script>

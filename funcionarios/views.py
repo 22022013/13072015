@@ -35,9 +35,9 @@ def funcionario_novo(request):
 
             return HttpResponseRedirect( r('funcionarios:funcionarios'))
         else:  
-            return render(request,'funcionario_cad.html',{'form': formFuncionario,'status':"Novo"})
+            return render(request,'funcionario_cad.html',{'form': formFuncionario,'status':"Cadastrar"})
     else:
-        return render(request,'funcionario_cad.html',{'form': FuncionarioForm(),'status':"Novo"})
+        return render(request,'funcionario_cad.html',{'form': FuncionarioForm(),'status':"Cadastrar"})
 
 
 def funcionario_editar(request,id_funcionario):

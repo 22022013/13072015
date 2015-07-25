@@ -23,7 +23,7 @@
         <h4 class="panel-title">Todos os Funcionários</h4>
     </div>
     <div class="panel-body">
-        <a class="btn btn-success" href="{% url 'funcionarios:funcionario_novo' %}">Novo&nbsp;&nbsp;<i class="fa fa-plus"></i></a>
+        <a class="btn btn-success" href="{% url 'funcionarios:funcionario_novo' %}">Cadastrar&nbsp;&nbsp;<i class="fa fa-plus"></i></a>
     
         <br /><br />
         {% if funcionarios %}
@@ -120,7 +120,7 @@
               "aoColumnDefs": [
                   { "bSortable": false, "aTargets": [ 3 ] }
               ],
-              "aaSorting": [[0, 'desc']]
+              "aaSorting": [[1, 'desc']]
           });
       } );
 
