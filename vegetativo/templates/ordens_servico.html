@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block htmltitle %}
+<title>Ordens de Serviço </title>
+{%endblock%}
+{% block extrastyle %}
+{%endblock%}
+{%block titulo-pagina%}
+    <h1 class="page-header">Ordens de Serviço</h1>
+{%endblock%}
+{%block breadcrumb%}
+    <li><a href="/">Início</a></li>
+    <li>Ordens de Serviço</li>
+{%endblock%}
+{% block content %}
+    
+<div class="panel panel-inverse">
+                <div class="panel-heading">
+        <div class="panel-heading-btn">
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+        </div>
+        <h4 class="panel-title">Todos os Ordens de Serviço</h4>
+    </div>
+    <div class="panel-body">
+        <a class="btn btn-success" href="{% url 'vegetativo:os_nova' %}">Nova&nbsp;&nbsp;<i class="fa fa-plus"></i></a>
+    
+        <br /><br />
+        {% if ordens_servico %}
+        <div class="panel panel-default">
+            
+            <div class="panel-body ">
+                <table class="table table-bordered" id="hidden-table-info">
+                    <thead>
+                        <tr>
+                            <th>Matricula</th>
+                            <th>OS</th>
+                            
+                            <th class="td-edit">Editar</th>  
+                        </tr>                  
+                    </thead>
+                    <tbody>
+                   
+                        {%for os in ordens_servico%}
+                   
+                        <tr>
+                            <td><strong>{{os.os}}</strong></td>
+                            <td>{{os.matricula}}</td>
+                           
+                            <td class="td-edit">
+                                <a href="{% url 'vegetativo:os_editar' os_id=os.id %}" data-toggle="tooltip" data-placement="top" title="Editar o Ordem de Serviço"><span class="fa fa-pencil-square-o"></span></a>
+                            </td>
+                                
+                        </tr>          
+                   
+                        {%endfor%}
+                   
+                    </tbody>
+                </table>
+            </div>    
+        </div>
+        {% else %}
+        <h4 class="alert alert-warning"><center>Nenhuma OS Encontrada.</center></h4>
+        {% endif %}
+    </div>
+</div>
+    
+    
+
+    
+
+    
+{%endblock%}
+{%block js%}
+{% load staticfiles %}
+    <script src="{% static 'js/jquery.dataTables.js'%}" type="text/javascript" ></script>
+    <script src="{% static 'js/DT_bootstrap.js' %}" type="text/javascript" ></script>
+<script >
+    jQuery(document).ready(function(){
+    
+        function cpf_mask(v){
+            v=v.replace(/\D/g,"")                 //Remove tudo o que não é dígito
+            v=v.replace(/(\d{3})(\d)/,"$1.$2")    //Coloca ponto entre o terceiro e o quarto dígitos
+            v=v.replace(/(\d{3})(\d)/,"$1.$2")    //Coloca ponto entre o setimo e o oitava dígitos
+            v=v.replace(/(\d{3})(\d)/,"$1-$2")   //Coloca ponto entre o decimoprimeiro e o decimosegundo dígitos
+            return v
+        }
+
+        // Aplicando a mascara do CPF    
+          $( ".cpf" ).each(function() {
+            $(this).text( cpf_mask($(this).text()) );
+        });
+
+        $('[data-toggle="tooltip"]').tooltip();
+        $('.alterar-status').click(function (e) {
+            e.preventDefault();
+            request_url = this.href;
+            bootbox.confirm('Tem certeza que deseja alterar o status desse funcionário?', function(confirmed) {
+                if(confirmed) {
+                    document.location.href = request_url;
+                }
+            });
+        });          
+    });
+      $(document).ready(function() {
+          var oTable = $('#hidden-table-info').dataTable( {
+              "aoColumnDefs": [
+                  { "bSortable": false, "aTargets": [ 3 ] }
+              ],
+              "aaSorting": [[1, 'desc']]
+          });
+      } );
+
+
+    </script>
+{%endblock%}
