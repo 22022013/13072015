@@ -7,10 +7,10 @@ from django.shortcuts import render
 from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse as r
 
-from materiais.models import Material
-from materiais.forms import MaterialForm
+from materiais.models import Material,Equipamento
+from materiais.forms import MaterialForm,EquipamentoForm
 
-import hashlib, time, simplejson
+import simplejson
 
 
 
@@ -91,3 +91,61 @@ def material_alterar_status(request,material_id):
 
     return HttpResponseRedirect(r('materiais:materiais'))
 
+def equipamentos(request):
+    '''
+      @equipamentos: Metodo de listagem dos equipamentos cadastrados no sistema 
+    '''
+    # Buscando todos os Equipamentos da interface administrativa na base de dados      
+    equipamentos = Equipamento.objects.filter(ativo=True).order_by('nome') 
+         
+    return render(request, 'equipamentos.html',{'equipamentos': equipamentos})
+
+def equipamento_novo(request):
+    '''
+      @equipamento_novo: Metodo de criação de um novo Equipamento
+    '''
+    if request.method == 'POST':
+        formEquipamento = EquipamentoForm(request.POST)
+        if formEquipamento.is_valid():
+            equipamento = formEquipamento.save(commit=False)
+            equipamento.save()
+
+            return HttpResponseRedirect( r('materiais:equipamentos'))
+        else:  
+            return render(request,'equipamento_cad.html',{'form': formEquipamento, 'status':'Cadastrar'})
+    else:
+        return render(request,'equipamento_cad.html',{'form': EquipamentoForm(),'status':'Cadastrar'})
+
+def equipamento_editar(request,equipamento_id):
+    '''
+      @equipamento_editar: Metodo de edição de um equipamento cadastrado na base
+    '''
+    equipamento = Equipamento.objects.get(id=equipamento_id)
+
+    if request.method == 'POST':
+
+        formEquipamento = EquipamentoForm(request.POST,instance=equipamento)
+        if formEquipamento.is_valid():            
+            equipamento = formEquipamento.save(commit=False)
+            equipamento.save()
+            
+            return HttpResponseRedirect( r('materiais:equipamentos'))
+        else :
+            return render(request, 'equipamento_cad.html', { 'form':formEquipamento ,'equipamento_id':equipamento_id, 'status':'Editar'})
+    else:           
+        return render(request,'equipamento_cad.html',{'form': EquipamentoForm(instance=equipamento),'equipamento_id':equipamento_id, 'status':'Editar'})
+
+def equipamento_alterar_status(request,equipamento_id):
+    '''
+        @equipamento_alterar_status: View para alterar o status de um equipamento
+    '''
+    equipamento = Equipamento.objects.get(id=equipamento_id)
+
+    if equipamento.ativo == True:
+        equipamento.ativo = False
+    else:       
+        equipamento.ativo = True
+
+    equipamento.save()
+
+    return HttpResponseRedirect(r('materiais:equipamentos'))

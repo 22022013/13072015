@@ -17,6 +17,9 @@ class TipoServico(models.Model):
     def __unicode__(self):
         return '%s' % (self.nome)
 
+    class Meta:
+        db_table = u'tipo_servico'
+
 class Servico(models.Model):
     '''
         @Servico: Modelo para servico
@@ -28,3 +31,6 @@ class Servico(models.Model):
 
     def __unicode__(self):
         return '%s' % (self.nome)
+
+    class Meta:
+        db_table = u'servico'

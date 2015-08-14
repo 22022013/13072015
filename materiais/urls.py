@@ -11,4 +11,9 @@ urlpatterns = patterns('materiais.views',
 	url(r'^editar/(?P<material_id>\d+)/$', 'material_editar', name='material_editar'),
 	url(r'^alterar_status/(?P<material_id>\d+)/$', 'material_alterar_status', name='material_alterar_status'),
 	
+	#equipamentos
+	url(r'^equipamentos/$','equipamentos', name='equipamentos'),	
+	url(r'^equipamento/novo/$', 'equipamento_novo', name='equipamento_novo'),
+	url(r'^equipamento/editar/(?P<equipamento_id>\d+)/$', 'equipamento_editar', name='equipamento_editar'),
+	url(r'^equipamento/alterar_status/(?P<equipamento_id>\d+)/$', 'equipamento_alterar_status', name='equipamento_alterar_status'),
 )

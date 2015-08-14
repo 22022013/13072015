@@ -32,6 +32,9 @@ def funcionario_novo(request):
         if formFuncionario.is_valid():
             funcionario = formFuncionario.save(commit=False)
             funcionario.save()
+            funcionario.notify_novo_funcionario()
+            
+
 
             return HttpResponseRedirect( r('funcionarios:funcionarios'))
         else:  

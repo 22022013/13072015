@@ -5,7 +5,7 @@ from django.forms.widgets import Select
 from django.core.exceptions import ValidationError
 from django.core.validators import EMPTY_VALUES
 from django.utils.translation import ugettext, ugettext_lazy as _
-from materiais.models import Material
+from materiais.models import Material,Equipamento
 import re
 
 class MaterialForm(forms.ModelForm):
@@ -17,8 +17,21 @@ class MaterialForm(forms.ModelForm):
 		model = Material
 		fields = ['nome','referencia','unidade','estoque_atual']
 
-		widgets = { 'nome'        : forms.TextInput(attrs={'class':'form-control','size':30}),
-					'referencia'  : forms.DateInput(attrs={'class': 'form-control','title':'Selecione a dada de Nascimento' ,'size':10}),
-					'unidade'	  : Select(attrs={'class':'form-control'}),    
-					'estoque_atual': forms.TextInput(attrs={'class':'form-control','size':5}),  
+		widgets = { 'nome'       	 : forms.TextInput(attrs={'class':'form-control','size':30}),
+					'referencia' 	 : forms.TextInput(attrs={'class':'form-control','size':30}),
+					'unidade'	 	 : Select(attrs={'class':'form-control'}),    
+					'estoque_atual'	 : forms.TextInput(attrs={'class':'form-control','size':5}),  
+		}
+
+class EquipamentoForm(forms.ModelForm):
+	'''
+	  @EquipamentoForm: Formulario para criação de um Equipamento
+	'''
+	   
+	class Meta:
+		model = Equipamento
+		fields = ['nome','quantidade']
+
+		widgets = { 'nome'        	: forms.TextInput(attrs={'class':'form-control','size':30}),
+					'quantidade'	: forms.TextInput(attrs={'class':'form-control','size':5}),  
 		}

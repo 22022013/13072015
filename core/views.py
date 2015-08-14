@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import user_passes_test,login_required
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse as r
-
+from core.models import Notification
 
 
 def group_required(*group_names):
@@ -30,3 +30,31 @@ def home(request):
 
 	return render(request,"home.html")
 
+
+@login_required
+def notifications(request):
+    user = request.user
+    notifications = Notification.objects.filter(to_user=user)[:10]
+    unread = Notification.objects.filter(to_user=user, is_read=False)
+    for notification in unread:
+        notification.is_read = True
+        notification.save()        
+    return render(request, 'core/notifications.html', {'notifications': notifications})
+import time
+@login_required
+def notificacao_vista(request):
+    user = request.user
+    notifications = Notification.objects.filter(to_user=user, is_read=False)[:5]
+    for notification in notifications:
+        notification.is_read = True
+        notification.save()
+    return HttpResponse("ok")
+    
+    
+
+@login_required
+def check_notifications(request):
+    user = request.user
+    notifications = Notification.objects.filter(to_user=user, is_read=False)[:5]
+    return HttpResponse(len(notifications))
+        

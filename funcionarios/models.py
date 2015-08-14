@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.db import models
-
+from usuarios.models import Usuario
+from core.models import Notification
 class Funcao(models.Model):
     '''
         @Funcao: Modelo para uma nova funcao
@@ -11,6 +12,9 @@ class Funcao(models.Model):
    
     def __unicode__(self):
         return '%s' % (self.nome)
+
+    class Meta:
+        db_table = u'funcao'
 
 class Funcionario(models.Model):
     '''
@@ -25,3 +29,33 @@ class Funcionario(models.Model):
 
     def __unicode__(self):
         return '%s' % (self.nome)
+
+    class Meta:
+        db_table = u'funcionario'
+
+    def get_absolute_url(self):
+        return "funcionarios/editar/%i/" % self.id
+
+    def notify_novo_funcionario(self):
+        
+        usuarios = Usuario.objects.filter(is_active=True)
+        for usuario in usuarios:
+            n = Notification(notification_type=Notification.NOVO_FUNCIONARIO,
+                funcionario=self,to_user=usuario).save()
+'''
+    def notify_remocao_funcionario(self,escola):
+        escola = convert_escola(escola)
+        diretores = escola.diretores.all()
+        for d in diretores:
+            n = Notification(notification_type=Notification.REMOCAO_FUNCIONARIO,
+                funcionario=self.matricula.funcionario,
+                to_user=d.user).save()
+
+    def notify_edicao_funcionario(self,escola):
+        escola = convert_escola(escola)
+        diretores = escola.diretores.all()
+        for d in diretores:
+            n = Notification(notification_type=Notification.EDICAO_FUNCIONARIO,
+                funcionario=self.matricula.funcionario,
+                to_user=d.user).save()
+'''

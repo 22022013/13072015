@@ -9,7 +9,7 @@
 {%endblock%}
 {%block breadcrumb%}
     <li><a href="/">Início</a></li>
-    <li>Funcionários</li>
+    <li ><a id="local-href" href="{%url 'funcionarios:funcionarios'%}">Funcionários</li>
 {%endblock%}
 {% block content %}
     
@@ -127,7 +127,7 @@
       $(document).ready(function() {
           var oTable = $('#hidden-table-info').dataTable( {
               "aoColumnDefs": [
-                  { "bSortable": false, "aTargets": [ 3 ] }
+                  { "bSortable": false, "aTargets": [ 2 ] }
               ],
               "aaSorting": [[1, 'desc']]
           });
