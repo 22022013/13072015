@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <title>{{configuracao.nome}}</title>
+    </head>
+    <body>
+        <table style="width:100%;margin-top:10px">
+        <tbody>
+            <tr>
+                <td style="width:20px;padding:7px 0">&nbsp;</td>
+                <td align="center" style="padding:7px 0">
+                    <table bgcolor="#ffffff" style="width:100%">
+                        <tbody>
+                            <tr>
+                                <td align="center" style="border-bottom:4px solid #333333;padding:7px 0">
+                                    <font size="1" face="Open-sans, sans-serif" color="#555454">
+                                        <h1><a src="{{link_dominio}}{% url 'core:home_site' %}" title="{{configuracao.nome}}"><span style="font-weight:500;font-size:28px;text-transform:uppercase;line-height:33px;color:#ea4748;">{{configuracao.nome}}</span></a></h1>
+                                    </font>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="padding:7px 0">
+                                    <font size="1" face="Open-sans, sans-serif" color="#555454">
+                                    <span style="font-weight:500;font-size:22px;text-transform:uppercase;line-height:33px">Olá {{usuario.first_name}} {{usuario.last_name}},</span><br>
+                                    <span style="font-weight:500;font-size:15px;text-transform:uppercase;line-height:25px">Seus dados foram confirmados.</span>
+                                    </font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0!important">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #d6d4d4;background-color:#f8f8f8;padding:7px 0">
+                                    <table style="width:100%">
+                                        <tbody>
+                                            <tr>
+                                                <td width="10" style="padding:7px 0">&nbsp;</td>
+                                                <td style="padding:7px 0">
+                                                    <font size="2" face="Open-sans, sans-serif" color="#555454">
+                                                        <p style="border-bottom:1px solid #d6d4d4;margin:3px 0 7px;text-transform:uppercase;font-weight:500;font-size:18px;padding-bottom:10px">
+                                                            Seus dados de acesso ao {{configuracao.nome}}
+                                                        </p>
+                                                        <span style="color:#777">
+                                                        <h4>Seus dados de acesso:</h4>
+                                                        <span style="color:#a0a0a0"><strong>Você pode acessar pelo seu E-Mail ou pelo seu Usuario.</strong></span><br>
+                                                        <span style="color:#333"><strong>E-mail: <a href="mailto:{{usuario.email}}" style="color:#337ff1" target="_blank">{{usuario.email}}</a></strong></span><br>
+                                                        <span style="color:#333"><strong>Usuário:</strong></span> {{usuario.username}}<br>
+                                                        <span style="color:#333"><strong>Senha:</strong></span> {{usuario.password_textplan}} <br><br>                            
+                                                    </font>
+                                                </td>
+                                                <td width="10" style="padding:7px 0">&nbsp;</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0!important">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #d6d4d4;background-color:#f8f8f8;padding:7px 0">
+                                    <table style="width:100%">
+                                        <tbody>
+                                            <tr>
+                                                <td width="10" style="padding:7px 0">&nbsp;</td>
+                                                <td style="padding:7px 0">
+                                                    <font size="2" face="Open-sans, sans-serif" color="#555454">
+                                                        <p style="border-bottom:1px solid #d6d4d4;margin:3px 0 7px;text-transform:uppercase;font-weight:500;font-size:18px;padding-bottom:10px">Dicas importantes sobre segurança:</p>
+                                                        <ol style="margin-bottom:0">
+                                                            <li>Mantenha os dados da sua conta seguros.</li>
+                                                            <li>Nunca revele os seus dados de acesso a ninguém.</li>
+                                                            <li>Troque a sua senha regularmente.</li>
+                                                            <li>Em caso de suspeita de que alguém esteja utilizando a sua conta indevidamente, por favor nos informe imediatamente.</li>
+                                                        </ol>
+                                                    </font>
+                                                </td>
+                                                <td width="10" style="padding:7px 0">&nbsp;</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0!important">&nbsp;</td>
+                            </tr>
+                            <tr></tr>
+                            <tr>
+                                <td style="padding:0!important">&nbsp;</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </body>
+</html>

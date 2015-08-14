@@ -1,0 +1,9 @@
+{{configuracao.nome}}
+Olá {{usuario.first_name}} {{usuario.last_name}},
+
+Você solicitou o reenvio da sua Senha.
+
+Acesso o nosso sistema para recuperar a sua senha: 
+
+Segue link para recuperar a sua senha: 
+{{link_dominio}}{% url 'usuario:recuperar_senha' usuario_hash=usuario.hashcode %}

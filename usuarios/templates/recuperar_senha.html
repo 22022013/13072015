@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<script>
+jQuery(document).ready(function(){
+      // Aplicando a mascara do CPF    
+    $('#id_cpf').mask("999.999.999-99");
+});
+</script>
+    <div class="breadcrumb clearfix">
+        <a class="home" href="{% url 'core:home' %}" title="Voltar para a Página Inicial"><i class="fa fa-home"></i></a>
+        <span class="navigation-pipe">&gt;</span>
+        Recuperar Senha
+    </div>
+
+    <h1 class="page-heading">Recuperar Senha</h1>
+146.682.377-10
+    <div class="box">    
+        <h5>Ola, {{usuario.first_name}}</h5>    
+        <h5>Confirme seu CPF.<h5/>
+        <br />
+        {%if erro%}
+        <h5 class="alert alert-warning">CPF não encontrado em nossa base de dados, verifique o CPF digitado e tente novamente.</h5>
+        <br />
+        {%endif%}
+        <form class="form-horizontal" method="POST" >
+            {%csrf_token%}            
+            <div id="group-id-cpf" class="form-group form-inline">
+                <label for="id_cpf" class="col-sm-2 col-md-2 control-label"> CPF</label>
+                
+                    <input class="form-control" id="id_cpf" maxlength="14" name="cpf" size="16" type="text">
+                                    
+            </div>
+            <br/><br/>
+            <div class="form-actions">
+                <a href="{% url 'core:home' %}" class="btn btn-danger">Cancelar</a>
+                <button class="btn btn-success" type="submit">Enviar</button>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

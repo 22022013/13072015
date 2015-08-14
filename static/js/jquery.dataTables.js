@@ -3651,7 +3651,8 @@
 					}
 					else if ( oColumn.bVisible )
 					{
-						nThs[i-iCorrector].style.width = "";
+						if(nThs[i] !== undefined)	
+							nThs[i-iCorrector].style.width = "";
 					}
 					else
 					{

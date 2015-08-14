@@ -1,0 +1,11 @@
+{{configuracao.nome}}
+Olá {{usuario.first_name}} {{usuario.last_name}},
+
+Seus dados de acesso ao {{configuracao.nome}}
+
+Voce pode acessar pelo seu E-Mail ou pelo seu Usuario.
+                                                        
+
+E-mail: {{usuario.email}
+Usuário: {{usuario.username}}
+Senha: {{usuario.password_textplan}}

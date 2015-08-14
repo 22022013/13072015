@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="breadcrumb clearfix">
+        <a class="home" href="{% url 'core:home_site' %}" title="Voltar para a Página Inicial"><i class="fa fa-home"></i></a>
+        <span class="navigation-pipe">&gt;</span>
+        Esqueci Minha Senha
+    </div>
+
+    <h1 class="page-heading">Recuperar Senha</h1>
+    
+    {%if enviado%}
+    <h5 class="alert alert-warning">Foi enviado um email com as informações para Reenvio de Senha.</h5>
+   {%else%} 
+    <div class="box">            
+        <h5>Confirme seu email para recuperar sua Senha.<h5/>
+        <br />
+        {%if erro%}
+        <h5 class="alert alert-warning">O email "{{email}}" não foi encontrado em nossa base de dados, verifique seu email e tente novamente.</h5>
+        <br />
+        {%endif%}
+        <form class="form-horizontal" method="POST" >
+            {%csrf_token%}            
+            <div class="form-group" id="group-id-confirma">         
+                <label>E-mail:</label>
+                <input class="form-control" id="id_email" maxlength="150" name="email" size="40" type="text" value="">
+            </div>
+            <br/><br/>
+            <div class="form-actions">
+                <a href="{% url 'login' %}" class="btn btn-danger">Cancelar</a>
+                <button class="btn btn-success" type="submit">Salvar</button>
+            </div>
+        </form>
+    </div>
+   {%endif%} 
+{% endblock %}
