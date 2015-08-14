@@ -34,6 +34,7 @@
                     <thead>
                         <tr>
                             <th>Nome</th>
+                            <th>Função</th>
                             <th>CPF</th>
                             <th class="td-edit" colspan="2">Status</th>
                             <th class="td-edit">Editar</th>  
@@ -45,6 +46,7 @@
                    
                         <tr>
                             <td><strong>{{funcionario.nome}}</strong></td>
+                            <td><strong>{{funcionario.funcao|default_if_none:"-------" }}</strong></td>
                             <td>
                                 {%if funcionario.cpf%}
                                    <span class="cpf">{{funcionario.cpf}}</span>

@@ -1,0 +1,134 @@
+<script>
+
+jQuery(document).ready(function(){
+     function atualizar_listagem_funcoes(){
+        
+        request_url ="{% url 'funcionarios:get_funcoes' %}";
+              
+       $.ajax({
+            type: "GET",
+            url: request_url,
+            dataType: "json",
+            success: function(json){
+                var options = "";
+                $.each(json, function(key, value){
+                    options += '<option value="' + key + '">' + value + '</option>';
+                });
+                $('#id_funcao').html(options);
+            }
+        });
+
+    }    
+
+
+    $('#salvar-funcao').click(function (e) {
+        e.preventDefault();
+        // Pegando os dados do formulario 
+        var frm = $('#funcao_form');         
+        // URL para requisição Post
+        var url_submit = frm.attr('action');
+        // Zerando Variavel e Serializando para enviar para a View
+        var dataForm = "";
+        var dataForm = frm.serialize();
+        
+        // Executando o Post por Ajax
+        $.ajax({
+            type: "POST",
+            url: url_submit,
+            data: dataForm,
+            dataType: "json",
+            success: function (json) {
+                $(".has-error").removeClass("has-error");
+                $("#erro").find(".cl_erro").remove();
+
+                // Percorrendo a lista recebida por JSON
+                $.each(json, function(key, value){   
+                    $("#erro-"+key).find(".parsley-required").remove();                 
+                    if (!$("#erro").find("tr:gt(0)").html()){
+                        $("#tb-erro").hide();
+                    }    
+                    // Verificando se o Formulario é valido                                            
+                    if(key == "status" && value == "OK"){
+                        
+                        // Exibindo Mensagem de Gravacao com Sucesso
+                        setTimeout(function(){ $("#modal-body").html("<h2 class='alert alert-warning'>Funcao gravada com Sucesso</h2>"); }, 500);
+                        // Fechando o Modal e atualizando a Listagem conforme o Tipo de Exercicio
+                        $('#modal-funcao').modal('hide');
+                        atualizar_listagem_funcoes();                  
+                    }else{
+
+                        if (key == '__all__') {
+                            $("#erro").append('<tr class="cl_erro"><td>Geral</td><td class="text-danger">'+value+'</td></tr>');
+                            $("#tb-erro").show();
+                        }else{
+                            group_id='#group-id-'+key
+                            id = "#id_"+key
+
+                            $(group_id).addClass( "has-error");
+                            $(id).addClass( "parsley-error");
+                            $("#erro-"+key).append(' <li class="parsley-required">'+value+'</li>');
+
+                        }
+                    } 
+                 }); 
+                    
+                
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                var problema_ajax = "<h2 class='alert alert-danger'>Status: " + textStatus + " | Motivo: " + errorThrown + "</h2>";
+                setTimeout(function(){ $("#modal-body").replaceWith(problema_ajax); }, 500);
+            }
+        });
+
+    });
+});
+
+</script>
+
+
+ <div class="modal-dialog">
+    <div class="modal-content">
+        
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 id="ModalLabel">Cadastrar Função</h4>
+        </div>
+        <div class="modal-body">
+            <div id="tb-erro" class="panel panel-warning" style="display:none;" >
+                <div class="panel-heading"><h5>Por favor corrigir os erros abaixo</h5></div>
+                <div id="panel-erro" class="panel-body">
+                    <table id="erro" class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Erro</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>    
+            <form id="funcao_form" class="form-horizontal" role="form" method="post" action="{% url 'funcionarios:funcao_nova_modal' %}">
+                {% csrf_token %} 
+                {% for field in form %} 
+                    <div class="form-group" id="group-id-{{ field.name }}">
+                        <label for="id_{{ field.name }}" class="col-sm-2 control-label"> {{field.label}}</label>
+                        <div class="col-sm-6">
+                            {{field}}
+                            <ul class="parsley-errors-list filled" id="erro-{{field.name}}">
+                               
+                            </ul> 
+                        </div>
+                    </div>
+                {%endfor%}
+               
+            </form>
+        </div>    
+
+        <div class="modal-footer">
+            <a class="btn btn-danger " data-dismiss="modal" >Cancelar</a>
+            <a class="btn btn-success btn-modal" id="salvar-funcao">Salvar</a>
+        </div>
+    </div>
+</div>    

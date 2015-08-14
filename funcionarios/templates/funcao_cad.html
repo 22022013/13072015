@@ -1,22 +1,18 @@
 {% extends 'base.html' %}
 {% block htmltitle %}
-<title>{{status}} Funcionario </title>
-{%endblock%}
-{% block extrastyle %}
-{% load staticfiles %}
-    <link href="{% static 'plugins/select2/dist/css/select2.min.css' %}" rel="stylesheet">
+<title>{{status}} Função </title>
 {%endblock%}
 {%block titulo-pagina%}
-    <h1 class="page-header">Funcionários</h1>
+    <h1 class="page-header">Funções</h1>
 {%endblock%}
 {%block breadcrumb%}
     <li><a href="/">Início</a></li>
-    <li><a href="{%url 'funcionarios:funcionarios'%}"> Funcionários</a></li>
-    <li>{{status}} Funcionário</li>
+    <li><a href="{%url 'funcionarios:funcoes'%}"> Funções</a></li>
+    <li>{{status}} Função</li>
 {%endblock%}
 {%block content%}
 
-<div id="modal-funcao" class="modal fade" role="dialog"  aria-hidden="true"></div>
+
 <div class="panel panel-inverse">
     <div class="panel-heading">
         <div class="panel-heading-btn">
@@ -24,7 +20,7 @@
             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
         </div>
-        <h4 class="panel-title">{{status}} Funcionário</h4>
+        <h4 class="panel-title">{{status}} Função</h4>
     </div>
     <div class="panel-body">
         <div id="tb-erro" class="panel panel-warning" style="display:none;" >
@@ -74,17 +70,14 @@
                             </script>
                         {%else%}
                             {{field}}
-                        {%endif%}   
-                        {%if field.name == 'funcao'%}
-                            <a id="btn-nova_funcao" class="badge " >Cadastrar Função&nbsp;&nbsp;<i class="fa fa-plus"></i></a>
-                        {%endif%} 
+                        {%endif%}    
                         </div>                
                     </div>
                 {%endfor%}
                 <div class="form-group">
                     <label class="control-label col-md-2 col-sm-2"></label>
                     <div class="col-md-6 col-sm-6">
-                        <a href="{%url 'funcionarios:funcionarios' %}" class="btn btn-danger">Cancelar</a>
+                        <a href="{%url 'funcionarios:funcoes' %}" class="btn btn-danger">Cancelar</a>
                         <button class="btn btn-success" type="submit">Salvar</button>
                     </div>
                 </div>
@@ -92,33 +85,4 @@
             </form>
   </div>
 </div>
-    
-
-
-{%endblock%}
-{%block js%}
-{% load staticfiles %}
-   
-    <script src="{% static 'plugins/select2/dist/js/select2.min.js' %}"></script>
-<script>
-jQuery(document).ready(function(){
-
-    // Aplicando a mascara do CPF    
-    $('#id_cpf').mask("999.999.999-99");
-    // Aplicando a mascara do Telefone    
-    $("#id_telefone").mask("(99) 99999999");
-    $("#id_celular").mask("(99) 99999999?9");
-
-    $("#id_funcao").select2();
-    $('#btn-nova_funcao').on( 'click', function( e ){
-            e.preventDefault();
-            var url_nova_funcao = "{% url 'funcionarios:funcao_nova_modal' %}";
-            $('#modal-funcao').load( url_nova_funcao, function( e ){
-                $('#modal-funcao').modal( 'show' );
-            });
-        }); 
-
-});
-</script>
-
 {%endblock%}

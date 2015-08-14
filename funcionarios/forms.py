@@ -2,11 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
+from django.forms.widgets import Select
 from django.core.exceptions import ValidationError
 from django.core.validators import EMPTY_VALUES
 from django.utils.translation import ugettext, ugettext_lazy as _
-from funcionarios.models import Funcionario
+from funcionarios.models import Funcionario,Funcao
 import re
+
 
 def _x(nome): 
 	""" 
@@ -87,14 +89,14 @@ class FuncionarioForm(forms.ModelForm):
 	   
 	class Meta:
 		model = Funcionario
-		fields = ['nome','cpf','telefone','celular']
+		fields = ['nome','funcao','cpf','telefone','celular']
 
-		widgets = { 'nome'        : forms.TextInput(attrs={'class':'form-control','size':40}),
-					'cpf'         : forms.TextInput(attrs={'class':'form-control','size':14}),  
-					'celular'    : forms.TextInput(attrs={'class':'form-control','size':14}), 
-					'telefone'    : forms.TextInput(attrs={'class':'form-control','size':14}),  
-					 
-		}
+		widgets = { 'nome'      : forms.TextInput(attrs={'class':'form-control','size':40}),
+					'cpf'       : forms.TextInput(attrs={'class':'form-control','size':14}),  
+					'celular'   : forms.TextInput(attrs={'class':'form-control','size':14}), 
+					'telefone'  : forms.TextInput(attrs={'class':'form-control','size':14}),  
+					'funcao'	: Select(attrs={'class':'form-control'}), 		 
+		}	
 	
 
 	def clean_nome(self):
@@ -122,3 +124,27 @@ class FuncionarioForm(forms.ModelForm):
 
 		return cpf
 
+
+class FuncaoForm(forms.ModelForm):
+	'''
+	  @FuncaoForm: Formulario para criação de uma funcao
+	'''
+	   
+	class Meta:
+		model = Funcao
+		fields = ['nome']
+
+		widgets = { 'nome'        : forms.TextInput(attrs={'class':'form-control','size':40}),				 
+		}
+	
+
+	def clean_nome(self):
+		'''
+			@clean_nome: Transforma o nome em capitalizado
+		'''
+		nome            = self.cleaned_data['nome']
+
+		if nome == '':
+			 raise forms.ValidationError('Este campo é obrigatório.')
+		
+		return nome.upper()
