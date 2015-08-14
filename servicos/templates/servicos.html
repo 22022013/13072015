@@ -37,6 +37,7 @@
                         <tr>
                             <th>Nome</th>
                             <th>Tipo</th>
+                            <th>Unidade</th>
                             <th class="td-edit">Editar</th>  
                             <th class="td-edit">Apagar</th>
                         </tr>                  
@@ -50,6 +51,13 @@
                             <td>
                                 {%if servico.tipo%}
                                     {{servico.tipo}}
+                                {%else%}
+                                   ------
+                                {%endif%}
+                            </td>
+                             <td>
+                                {%if servico.unidade%}
+                                    {{servico.get_unidade_display}}
                                 {%else%}
                                    ------
                                 {%endif%}

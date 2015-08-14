@@ -105,8 +105,8 @@ jQuery(document).ready(function(){
     $("#id_tipo").select2();
 $('#btn-novo_tipo_servico').on( 'click', function( e ){
         e.preventDefault();
-        var url_aulas = "{% url 'servicos:tipo_servico_novo_modal' %}";
-        $('#modal-tipo_servico').load( url_aulas, function( e ){
+        var url_novo_tipo = "{% url 'servicos:tipo_servico_novo_modal' %}";
+        $('#modal-tipo_servico').load( url_novo_tipo, function( e ){
             $('#modal-tipo_servico').modal( 'show' );
         });
     }); 

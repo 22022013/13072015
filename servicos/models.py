@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 
+UNIDADE = (
+    ('1','UND'),
+    ('2','M'),
+)
+
 class TipoServico(models.Model):
     '''
         @SubtipoServico: Modelo para tipo de servico
@@ -18,6 +23,7 @@ class Servico(models.Model):
     ''' 
     nome  	= models.CharField(max_length=100)
     tipo    = models.ForeignKey(TipoServico,blank=True,null=True,related_name="tipo_servico")
+    unidade = models.CharField(max_length=1,blank=True,null=True,choices=UNIDADE)
     ativo   = models.BooleanField(default=True)
 
     def __unicode__(self):
