@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'', include('core.urls', namespace='core')),
     url(r'^funcionarios/', include('funcionarios.urls', namespace='funcionarios')),
     url(r'^materiais/', include('materiais.urls', namespace='materiais')),
+    url(r'^obras/', include('obras.urls', namespace='obras')),
     url(r'^servicos/', include('servicos.urls', namespace='servicos')),
     url(r'^vegetativo/', include('vegetativo.urls', namespace='vegetativo')),
     url(r'^usuarios/', include('usuarios.urls', namespace='usuarios')),

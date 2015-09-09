@@ -29,6 +29,7 @@ INSTALLED_APPS = (
     'core',
     'funcionarios',
     'materiais',
+    'obras',
     'servicos',
     'vegetativo',
     'usuarios',

@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import simplejson
 from django.contrib.auth.decorators import user_passes_test,login_required
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse as r
 
-from .models import Notification
+from .models import Notification,UF,Municipio
 
 
 def group_required(*group_names):
@@ -25,6 +26,25 @@ def verifica_membro(user,grupo):
 		@verifica_membro: Verificar se usuario faz parte de um determinado Grupo
 	''' 
 	return user.groups.filter(name=str(grupo)).exists()
+
+def get_municipios(request):
+    """"
+        @get_municipios:
+    """
+    if request.method == 'POST':    
+        # Pegando o UF de acordo com o Informado
+        uf = UF.objects.get(pk=request.POST['estado'])        
+        # Pegando lista de Municipios de acordo com a UF        
+        municipios = uf.municipios.all()
+                
+        # Gerando lista para o Template
+        municipio_dict = {}
+        for municipio in municipios:
+            municipio_dict[municipio.id] = municipio.name
+                
+        return HttpResponse(simplejson.dumps(municipio_dict))
+    else:
+        return HttpResponse('Não autorizado')
 
 @login_required
 def home(request):
