@@ -54,23 +54,23 @@
                                     ---.---.------
                                 {%endif%}
                             </td>
-                            {%if  funcionario.ativo == True%}
+                            {%if  funcionario.ativo%}
                                 <td class="td-edit">
-                                    <span class="badge alert-success">Ativado</span>
+                                    <span class="badge alert-success">Ativo</span>
                                 </td>
                                 <td class="td-edit">
-                                    <a class="alterar-status" href="{%url 'funcionarios:funcionario_alterar_status' id_funcionario=funcionario.id%}" data-toggle="tooltip" data-placement="top" title="Desativar o Funcionário"><i class="fa fa-toggle-on"></i></a>
+                                    <a class="alterar-status" href="{%url 'funcionarios:funcionario_alterar_status' id=funcionario.id%}" data-toggle="tooltip" data-placement="top" title="Desativar o Funcionário"><i class="fa fa-toggle-on"></i></a>
                                 </td>
                             {%else%}
                                 <td class="td-edit">
-                                    <span class="badge alert-danger">Desativado</span>                                
+                                    <span class="badge alert-danger">Inativo</span>                                
                                 </td>
                                 <td class="td-edit">
-                                    <a class="alterar-status" href="{%url 'funcionarios:funcionario_alterar_status' id_funcionario=funcionario.id%}" data-toggle="tooltip" data-placement="top" title="Ativar o Funcionário"><i class="fa fa-toggle-off"></i></a>
+                                    <a class="alterar-status" href="{%url 'funcionarios:funcionario_alterar_status' id=funcionario.id%}" data-toggle="tooltip" data-placement="top" title="Ativar o Funcionário"><i class="fa fa-toggle-off"></i></a>
                                 </td>
                             {%endif%} 
                                 <td class="td-edit">
-                                    <a href="{% url 'funcionarios:funcionario_editar' id_funcionario=funcionario.id %}" data-toggle="tooltip" data-placement="top" title="Editar o Funcionário"><span class="fa fa-pencil-square-o"></span></a>
+                                    <a href="{% url 'funcionarios:funcionario_editar' id=funcionario.id %}" data-toggle="tooltip" data-placement="top" title="Editar o Funcionário"><span class="fa fa-pencil-square-o"></span></a>
                                 </td>
                                 
                         </tr>          

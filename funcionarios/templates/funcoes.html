@@ -35,6 +35,7 @@
                         <tr>
                             <th>Nome</th>
                             <th class="td-edit">Editar</th>  
+                            <th class="td-edit">Apagar</th>  
                         </tr>                  
                     </thead>
                     <tbody>
@@ -43,8 +44,11 @@
                             <tr>
                                 <td><strong>{{funcao.nome}}</strong></td>
                                 <td class="td-edit">
-                                    <a href="{% url 'funcionarios:funcao_editar' id_funcao=funcao.id %}" data-toggle="tooltip" data-placement="top" title="Editar a Função"><span class="fa fa-pencil-square-o"></span></a>
-                                </td>    
+                                    <a href="{% url 'funcionarios:funcao_editar' id=funcao.id %}" data-toggle="tooltip" data-placement="top" title="Editar a Função"><span class="fa fa-pencil-square-o"></span></a>
+                                </td> 
+                                <td class="td-edit">
+                                    <a class="alterar-status" href="{%url 'funcionarios:funcao_alterar_status' id=funcao.id%}" data-toggle="tooltip" data-placement="top" title="Remover a Função"><i class="fa fa-trash-o"></i></a>
+                                </td>   
                             </tr>          
                         {%endfor%}
                     {%endif%}
@@ -72,6 +76,16 @@
     jQuery(document).ready(function(){
    
         $('[data-toggle="tooltip"]').tooltip();
+        $('.alterar-status').click(function (e) {
+            e.preventDefault();
+            request_url = this.href;
+            bootbox.confirm('Tem certeza que deseja remover essa função?', function(confirmed) {
+                if(confirmed) {
+                    document.location.href = request_url;
+                }
+            });
+        });
+     });
 
         $(document).ready(function() {
             var oTable = $('#hidden-table-info').dataTable( {
@@ -81,7 +95,7 @@
               "aaSorting": [[1, 'desc']]
             });
         });
-    });
+   
 
     </script>
 {%endblock%}

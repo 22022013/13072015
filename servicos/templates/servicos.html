@@ -63,10 +63,10 @@
                                 {%endif%}
                             </td>
                             <td class="td-edit">
-                                <a href="{% url 'servicos:servico_editar' servico_id=servico.id %}" data-toggle="tooltip" data-placement="top" title="Editar o Serviço"><span class="fa fa-pencil-square-o"></span></a>
+                                <a href="{% url 'servicos:servico_editar' id=servico.id %}" data-toggle="tooltip" data-placement="top" title="Editar o Serviço"><span class="fa fa-pencil-square-o"></span></a>
                             </td>
                             <td class="td-edit">
-                                <a class="alterar-status" href="{%url 'servicos:servico_alterar_status' servico_id=servico.id%}" data-toggle="tooltip" data-placement="top" title="Remover o Serviço"><i class="fa fa-trash-o"></i></a>
+                                <a class="alterar-status" href="{%url 'servicos:servico_alterar_status' id=servico.id%}" data-toggle="tooltip" data-placement="top" title="Remover o Serviço"><i class="fa fa-trash-o"></i></a>
                             </td>
                                 
                         </tr>          

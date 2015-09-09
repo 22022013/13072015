@@ -49,10 +49,10 @@
                                 {{equipamento.quantidade}}
                             </td>
                             <td class="td-edit">
-                                <a  href="{% url 'materiais:equipamento_editar' equipamento_id=equipamento.id %}" data-toggle="tooltip" data-placement="top" title="Editar o Equipamento"><span class="fa fa-pencil-square-o"></span></a>
+                                <a  href="{% url 'materiais:equipamento_editar' id=equipamento.id %}" data-toggle="tooltip" data-placement="top" title="Editar o Equipamento"><span class="fa fa-pencil-square-o"></span></a>
                             </td>
                             <td class="td-edit">
-                                <a class="apagar-equipamento" href="{%url 'materiais:equipamento_alterar_status' equipamento_id=equipamento.id%}" data-toggle="tooltip" data-placement="top" title="Remover Equipamento"><i class="fa fa-trash-o"></i></a>
+                                <a class="apagar-equipamento" href="{%url 'materiais:equipamento_alterar_status' id=equipamento.id%}" data-toggle="tooltip" data-placement="top" title="Remover Equipamento"><i class="fa fa-trash-o"></i></a>
                             </td>
                                 
                                 

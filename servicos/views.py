@@ -1,18 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
+import simplejson
 
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse as r
 
-from servicos.models import TipoServico,Servico
-from servicos.forms import TipoServicoForm,ServicoForm
-
-import hashlib, time, simplejson
-
-
+from .models import TipoServico,Servico
+from .forms import TipoServicoForm,ServicoForm
 
 def servicos(request):
     '''
@@ -57,11 +53,11 @@ def servico_novo_modal(request):
     else:
         return render(request, 'servico_modal.html',{'form': ServicoForm()})
 
-def servico_editar(request,servico_id):
+def servico_editar(request,id):
     '''
       @servico_editar: Metodo de edição de um servico cadastrado na base
     '''
-    servico = Servico.objects.get(id=servico_id)
+    servico = Servico.objects.get(id=id)
 
     if request.method == 'POST':
 
@@ -72,17 +68,17 @@ def servico_editar(request,servico_id):
             
             return HttpResponseRedirect( r('servicos:servicos'))
         else :
-            return render(request, 'servico_cad.html', { 'form':formServico ,'servico_id':servico_id, 'status':'Editar'})
+            return render(request, 'servico_cad.html', { 'form':formServico ,'servico_id':id, 'status':'Editar'})
     else:           
-        return render(request,'servico_cad.html',{'form': ServicoForm(instance=servico),'servico_id':servico_id, 'status':'Editar'})
+        return render(request,'servico_cad.html',{'form': ServicoForm(instance=servico),'servico_id':id, 'status':'Editar'})
 
-def servico_alterar_status(request,servico_id):
+def servico_alterar_status(request,id):
     '''
         @servico_alterar_status: View para alterar o status de um servico
     '''
-    servico = Servico.objects.get(id=servico_id)
+    servico = Servico.objects.get(id=id)
 
-    if servico.ativo == True:
+    if servico.ativo:
         servico.ativo = False
     else:       
         servico.ativo = True
@@ -144,11 +140,11 @@ def get_tipos_servico(request):
     
         return HttpResponse(simplejson.dumps(tipo_servico_dict))    
 
-def tipo_servico_editar(request,tipo_servico_id):
+def tipo_servico_editar(request,id):
     '''
       @servico_editar: Metodo de edição de um servico cadastrado na base
     '''
-    tipo_servico = TipoServico.objects.get(id=tipo_servico_id)
+    tipo_servico = TipoServico.objects.get(id=id)
 
     if request.method == 'POST':
 
@@ -159,17 +155,17 @@ def tipo_servico_editar(request,tipo_servico_id):
             
             return HttpResponseRedirect( r('servicos:tipos_servico'))
         else :
-            return render(request, 'tipo_servico_cad.html', { 'form':formTipoServico ,'tipo_servico_id':tipo_servico_id, 'status':'Editar'})
+            return render(request, 'tipo_servico_cad.html', { 'form':formTipoServico ,'tipo_servico_id':id, 'status':'Editar'})
     else:           
-        return render(request,'tipo_servico_cad.html',{'form': TipoServicoForm(instance=tipo_servico),'tipo_servico_id':tipo_servico_id, 'status':'Editar'})
+        return render(request,'tipo_servico_cad.html',{'form': TipoServicoForm(instance=tipo_servico),'tipo_servico_id':id, 'status':'Editar'})
 
-def tipo_servico_alterar_status(request,tipo_servico_id):
+def tipo_servico_alterar_status(request,id):
     '''
         @subtiposervico_alterar_status: View para alterar o status de um servico
     '''
-    tipo_servico = TipoServico.objects.get(id=tipo_servico_id)
+    tipo_servico = TipoServico.objects.get(id=id)
 
-    if tipo_servico.ativo == True:
+    if tipo_servico.ativo:
         tipo_servico.ativo = False
     else:       
         tipo_servico.ativo = True

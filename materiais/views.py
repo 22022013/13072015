@@ -1,18 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
+import simplejson
 
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse as r
 
-from materiais.models import Material,Equipamento
-from materiais.forms import MaterialForm,EquipamentoForm
-
-import simplejson
-
-
+from .models import Material,Equipamento
+from .forms import MaterialForm,EquipamentoForm
 
 def materiais(request):
     '''
@@ -57,11 +53,11 @@ def material_novo_modal(request):
     else:
         return render(request, 'material_modal.html',{'form': MaterialForm()})
 
-def material_editar(request,material_id):
+def material_editar(request,id):
     '''
       @material_editar: Metodo de edição de um material cadastrado na base
     '''
-    material = Material.objects.get(id=material_id)
+    material = Material.objects.get(id=id)
 
     if request.method == 'POST':
 
@@ -72,17 +68,17 @@ def material_editar(request,material_id):
             
             return HttpResponseRedirect( r('materiais:materiais'))
         else :
-            return render(request, 'material_cad.html', { 'form':formMaterial ,'material_id':material_id, 'status':'Editar'})
+            return render(request, 'material_cad.html', { 'form':formMaterial ,'material_id':id, 'status':'Editar'})
     else:           
-        return render(request,'material_cad.html',{'form': MaterialForm(instance=material),'material_id':material_id, 'status':'Editar'})
+        return render(request,'material_cad.html',{'form': MaterialForm(instance=material),'material_id':id, 'status':'Editar'})
 
-def material_alterar_status(request,material_id):
+def material_alterar_status(request,id):
     '''
         @material_alterar_status: View para alterar o status de um material
     '''
-    material = Material.objects.get(id=material_id)
+    material = Material.objects.get(id=id)
 
-    if material.ativo == True:
+    if material.ativo:
         material.ativo = False
     else:       
         material.ativo = True
@@ -116,11 +112,11 @@ def equipamento_novo(request):
     else:
         return render(request,'equipamento_cad.html',{'form': EquipamentoForm(),'status':'Cadastrar'})
 
-def equipamento_editar(request,equipamento_id):
+def equipamento_editar(request,id):
     '''
       @equipamento_editar: Metodo de edição de um equipamento cadastrado na base
     '''
-    equipamento = Equipamento.objects.get(id=equipamento_id)
+    equipamento = Equipamento.objects.get(id=id)
 
     if request.method == 'POST':
 
@@ -131,17 +127,17 @@ def equipamento_editar(request,equipamento_id):
             
             return HttpResponseRedirect( r('materiais:equipamentos'))
         else :
-            return render(request, 'equipamento_cad.html', { 'form':formEquipamento ,'equipamento_id':equipamento_id, 'status':'Editar'})
+            return render(request, 'equipamento_cad.html', { 'form':formEquipamento ,'equipamento_id':_id, 'status':'Editar'})
     else:           
-        return render(request,'equipamento_cad.html',{'form': EquipamentoForm(instance=equipamento),'equipamento_id':equipamento_id, 'status':'Editar'})
+        return render(request,'equipamento_cad.html',{'form': EquipamentoForm(instance=equipamento),'equipamento_id':id, 'status':'Editar'})
 
-def equipamento_alterar_status(request,equipamento_id):
+def equipamento_alterar_status(request,id):
     '''
         @equipamento_alterar_status: View para alterar o status de um equipamento
     '''
-    equipamento = Equipamento.objects.get(id=equipamento_id)
+    equipamento = Equipamento.objects.get(id=id)
 
-    if equipamento.ativo == True:
+    if equipamento.ativo:
         equipamento.ativo = False
     else:       
         equipamento.ativo = True

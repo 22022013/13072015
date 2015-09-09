@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
+import simplejson
 
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
@@ -8,10 +8,10 @@ from django.contrib.auth.models import Group
 from django.core.urlresolvers import reverse as r
 from django.contrib.auth.decorators import login_required
 
-from funcionarios.models import Funcionario,Funcao
 from core.views import group_required,verifica_membro
-from funcionarios.forms import FuncionarioForm,FuncaoForm
-import simplejson
+from .models import Funcionario,Funcao
+from .forms import FuncionarioForm,FuncaoForm
+
 
 def funcionarios(request):
     '''
@@ -70,11 +70,11 @@ def get_funcoes(request):
     
         return HttpResponse(simplejson.dumps(funcao_dict))    
 
-def funcionario_editar(request,id_funcionario):
+def funcionario_editar(request,id):
     '''
       @funcionario_editar: Metodo de edição de um funcionario cadastrado na base
     '''
-    funcionario = Funcionario.objects.get(id=id_funcionario)
+    funcionario = Funcionario.objects.get(id=id)
 
     if request.method == 'POST':
 
@@ -90,13 +90,13 @@ def funcionario_editar(request,id_funcionario):
         return render(request,'funcionario_cad.html',{'form': FuncionarioForm(instance=funcionario),'status':"Editar"})
 
 
-def funcionario_alterar_status(request,id_funcionario):
+def funcionario_alterar_status(request,id):
     '''
         @funcionario_alterar_status: View para alterar o status de um caderno
     '''
-    funcionario = Funcionario.objects.get(id=id_funcionario)
+    funcionario = Funcionario.objects.get(id=id)
 
-    if funcionario.ativo == True:
+    if funcionario.ativo:
         funcionario.ativo = False
     else:       
         funcionario.ativo = True
@@ -132,11 +132,11 @@ def funcao_nova(request):
         return render(request,'funcao_cad.html',{'form': FuncaoForm(),'status':"Cadastrar"})
 
 
-def funcao_editar(request,id_funcao):
+def funcao_editar(request,id):
     '''
       @funcao_editar: Metodo de edição de uma funcao cadastrada na base
     '''
-    funcao = Funcao.objects.get(id=id_funcao)
+    funcao = Funcao.objects.get(id=id)
 
     if request.method == 'POST':
 
@@ -152,13 +152,13 @@ def funcao_editar(request,id_funcao):
         return render(request,'funcao_cad.html',{'form': FuncaoForm(instance=funcao),'status':"Editar"})
 
 
-def funcao_alterar_status(request,id_funcao):
+def funcao_alterar_status(request,id):
     '''
         @funcao_alterar_status: View para alterar o status de um caderno
     '''
-    funcao = Funcao.objects.get(id=id_funcao)
+    funcao = Funcao.objects.get(id=id)
 
-    if funcao.ativo == True:
+    if funcao.ativo:
         funcao.ativo = False
     else:       
         funcao.ativo = True

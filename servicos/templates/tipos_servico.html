@@ -46,10 +46,10 @@
                         <tr>
                             <td><strong>{{tipo_servico.nome}}</strong></td>
                             <td class="td-edit">
-                                <a href="{% url 'servicos:tipo_servico_editar' tipo_servico_id=tipo_servico.id %}" data-toggle="tooltip" data-placement="top" title="Editar o Tipo de Serviço"><span class="fa fa-pencil-square-o"></span></a>
+                                <a href="{% url 'servicos:tipo_servico_editar' id=tipo_servico.id %}" data-toggle="tooltip" data-placement="top" title="Editar o Tipo de Serviço"><span class="fa fa-pencil-square-o"></span></a>
                             </td>
                             <td class="td-edit">
-                                <a class="alterar-status" href="{%url 'servicos:tipo_servico_alterar_status' tipo_servico_id=tipo_servico.id%}" data-toggle="tooltip" data-placement="top" title="Remover o Tipo de Serviço"><i class="fa fa-trash-o"></i></a>
+                                <a class="alterar-status" href="{%url 'servicos:tipo_servico_alterar_status' id=tipo_servico.id%}" data-toggle="tooltip" data-placement="top" title="Remover o Tipo de Serviço"><i class="fa fa-trash-o"></i></a>
                             </td>
                         </tr>          
                         {%endfor%}
