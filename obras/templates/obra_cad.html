@@ -58,24 +58,28 @@
                     <div  id="group-id-{{ field.name }}" class="form-group form-inline">
                         <label for="id_{{ field.name }}" class="col-sm-2 col-md-2 control-label"> {{field.label}}</label>
                         <div class="col-md-6">
-                        {% if field.errors %}
-                            {{field}}
-                            <ul class="parsley-errors-list filled" id="erro-{{field.name}}">
-                               
-                            </ul>
                         
-                            <script>
-                                $('#group-id-{{field.name}}').addClass( "has-error");
-                                $('#id_{{field.name}}').addClass( "parsley-error");
-                                var msg_erro ='{{field.errors.as_text}}'; 
-                                var msg_erro = msg_erro.replace("*","");
-                                $("#erro-{{field.name}}").append(' <li class="parsley-required">'+msg_erro+'</li>');
-                               
-                            </script>
-                        {%else%}
                             {{field}}
-                        {%endif%}    
-                        </div>                
+                            {%if field.name == 'data_inicio' or field.name == 'data_termino'%}
+                                <a class="limpa_data" id="limpa_{{field.name}}"><i class="fa fa-times"></i><span>limpar</span></a>
+                            {%endif%} 
+                            {% if field.errors %}
+                                <ul class="parsley-errors-list filled" id="erro-{{field.name}}">
+                                   
+                                </ul>
+                            
+                                <script>
+                                    $('#group-id-{{field.name}}').addClass( "has-error");
+                                    $('#id_{{field.name}}').addClass( "parsley-error");
+                                    var msg_erro ='{{field.errors.as_text}}'; 
+                                    var msg_erro = msg_erro.replace("*","");
+                                    $("#erro-{{field.name}}").append(' <li class="parsley-required">'+msg_erro+'</li>');
+                                   
+                                </script>
+                            {%endif%}  
+                        
+                        </div>
+
                     </div>
                 {%endfor%}
                 <div class="form-group">
@@ -96,7 +100,36 @@
     <script src="{% static 'plugins/select2/dist/js/select2.min.js' %}"></script>
 <script>
 jQuery(document).ready(function(){
-  
+    
+    $("#limpa_data_inicio").click(function () {
+           $("#id_data_inicio").val('');
+    });
+    $("#limpa_data_termino").click(function () {
+           $("#id_data_termino").val('');
+    });
+
+    // Aplicando a mascara da Data     
+    $("#id_data_inicio").mask("99/99/9999");
+    $("#id_data_inicio").datepicker({
+        autoclose: true,
+        language: 'pt-BR',
+        setDate: new Date(),
+        format: "dd/mm/yyyy",
+        todayHighlight: true,
+        orientation: "top left",
+    });
+   
+    $("#id_data_termino").mask("99/99/9999");
+    $("#id_data_termino").datepicker({
+        autoclose: true,
+        language: 'pt-BR',
+        setDate: new Date(),
+        format: "dd/mm/yyyy",
+        todayHighlight: true,
+        orientation: "top left",
+    });
+   
+   
     //verificando se existe estado selecionado
     if($('#id_estado').val() == ""){
         $('#id_municipio option[value!="0"]').remove(); 
@@ -108,7 +141,6 @@ jQuery(document).ready(function(){
             verifica_municipio($('#id_estado').val(),'');
         }
     }
-
 
     function verifica_municipio(estado,municipio_atual){                
 
@@ -140,12 +172,27 @@ jQuery(document).ready(function(){
         }               
     }            
 
-   
     $('#id_estado').change(function(e){
         verifica_municipio($(this).val(),'');
     });
 
+    verifica_status($("#id_status").val());
+    function  verifica_status(status){  
+        if(status=='finalizada'){
+            
+            $("#group-id-data_termino").show();
+        }else{
+            $("#id_data_termino").val('');
+            $("#group-id-data_termino").hide();
+        }
+    }
+
+    
+     $('#id_status').change(function(e){
+        verifica_status($(this).val());
+        
     });
+});
 </script>
 {%endblock%}
  

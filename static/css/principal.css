@@ -41,3 +41,13 @@
 .login .login-header .icon{
   top:6px;
 }
+
+.limpa_data {
+    padding-left: 5px;
+    cursor: pointer;
+    color: #5D5E61;
+}
+.limpa_data span {
+    font-size: 10px;
+    padding-left: 3px;
+}
