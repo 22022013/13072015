@@ -1,6 +1,7 @@
 #coding:utf-8
 from django.db import models
 from core.models import UF,Municipio
+from clientes.models import Cliente
 
 STATUS_OBRA = (
     ('aguardando','Aguardando'),
@@ -9,7 +10,7 @@ STATUS_OBRA = (
 )
 
 class Obra(models.Model):
-    #cliente 			= models.ForeignKey(Cliente,blank=True,null=True,related_name="cliente")
+    cliente 			= models.ForeignKey(Cliente,blank=True,null=True,related_name="cliente")
     descricao           = models.CharField(max_length=500)
     estado              = models.ForeignKey(UF,blank=True,null=True)
     municipio           = models.ForeignKey(Municipio,blank=True,null=True)

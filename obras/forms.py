@@ -4,6 +4,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.forms.widgets import Select
 
+from clientes.models import Cliente
 from .models import Obra
 
 
@@ -14,9 +15,11 @@ class ObraForm(forms.ModelForm):
     class Meta:
         model = Obra
 
-        fields = ['descricao','status','data_inicio','data_termino','estado','municipio','bairro','endereco','numero','complemento']
+        fields = ['cliente','descricao','status','data_inicio','data_termino','estado','municipio','bairro','endereco','numero','complemento']
 
-        widgets = { 'descricao'   : forms.Textarea(attrs={'class':'form-control','cols': 50, 'rows': 5}),
+        widgets = { 
+                    'cliente'   : Select(attrs={'class':'form-control'}),
+                    'descricao'   : forms.Textarea(attrs={'class':'form-control','cols': 50, 'rows': 5}),
                     'estado'      : Select(attrs={'class':'form-control'}),
                     'status'      : Select(attrs={'class':'form-control'}),
                     'data_inicio' : forms.DateInput(attrs={'class': 'form-control','size':10}),
@@ -28,6 +31,10 @@ class ObraForm(forms.ModelForm):
                     'complemento' : forms.TextInput(attrs={'class':'form-control','size':20}),
                 }
 
+    def __init__(self, *args, **kwargs):
+        super(ObraForm, self).__init__(*args, **kwargs)
+        self.fields['cliente'].queryset = Cliente.objects.filter(ativo=True)
+    
     def clean(self):
         '''
         @clean: 

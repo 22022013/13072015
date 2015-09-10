@@ -33,9 +33,9 @@
                 <table class="table table-bordered" id="hidden-table-info">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th class="td-edit">ID</th>
+                            <th>Cliente</th>
                             <th>Descrição</th>
-                            <th>Endereço</th>
                             <th class="td-edit">Editar</th>  
                             <th class="td-edit">Apagar</th>
                         </tr>                  
@@ -46,12 +46,10 @@
                    
                         <tr>
                             <td><strong>{{obra.id}}</strong></td>
+                            <td><strong>{{obra.cliente|default_if_none:"-----" }}</strong></td>
                             <td>
                                 {{obra.descricao|truncatewords:10}}
                             </td> 
-                            <td >
-                                {{obra.UF}}
-                            </td>
                             <td class="td-edit">
                                 <a  href="{% url 'obras:obra_editar' id=obra.id %}" data-toggle="tooltip" data-placement="top" title="Editar o Obra"><span class="fa fa-pencil-square-o"></span></a>
                             </td>

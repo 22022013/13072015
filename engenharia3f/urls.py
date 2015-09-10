@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'login/','django.contrib.auth.views.login',{"template_name":"login.html"},name='login'),
     url(r'logout/','django.contrib.auth.views.logout_then_login',{'login_url': '/'},name='logout'),
     
+    url(r'^clientes/', include('clientes.urls', namespace='clientes')),
     url(r'', include('core.urls', namespace='core')),
     url(r'^funcionarios/', include('funcionarios.urls', namespace='funcionarios')),
     url(r'^materiais/', include('materiais.urls', namespace='materiais')),

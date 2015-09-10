@@ -3,12 +3,12 @@
 <title>{{status}} Funcionario </title>
 {%endblock%}
 {%block titulo-pagina%}
-    <h1 class="page-header">Materiais</h1>
+    <h1 class="page-header">Clientes</h1>
 {%endblock%}
 {%block breadcrumb%}
     <li><a href="/">Início</a></li>
-    <li><a id="local-href" href="{%url 'materiais:materiais'%}"> Materiais</a></li>
-    <li>Cadastrar Material</li>
+    <li><a id="local-href" href="{%url 'clientes:clientes'%}"> Clientes</a></li>
+    <li>Cadastrar Cliente</li>
 {%endblock%}
 {%block content%}
 
@@ -20,7 +20,7 @@
             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
             <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
         </div>
-        <h4 class="panel-title">{{status}} Material</h4>
+        <h4 class="panel-title">{{status}} Cliente</h4>
     </div>
     <div class="panel-body">
         <div id="tb-erro" class="panel panel-warning" style="display:none;" >
@@ -77,7 +77,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-2 col-sm-2"></label>
                     <div class="col-md-6 col-sm-6">
-                        <a href="{%url 'materiais:materiais' %}" class="btn btn-danger">Cancelar</a>
+                        <a href="{%url 'clientes:clientes' %}" class="btn btn-danger">Cancelar</a>
                         <button class="btn btn-success" type="submit">Salvar</button>
                     </div>
                 </div>
@@ -88,4 +88,44 @@
     
 
 
+{%endblock%}
+{%block js%}
+<script>
+jQuery(document).ready(function(){
+    // Aplicando a mascara do CPF    
+     $('#id_cpf').mask("999.999.999-99");
+    // Aplicando a mascara do CPF    
+    $('#id_cnpj').mask("99.999.999/9999-99");
+    // Aplicando a mascara do Telefone    
+    $("#id_telefone").mask("(99) 99999999?9");
+    $("#id_telefone2").mask("(99) 99999999?9");
+    function verifica_tipo_cliente(){
+        tipo_cliente=$("#id_tipo_cliente").val();
+        $("#group-id-cnpj").hide();
+        $("#group-id-nascimento").hide();
+        $("#group-id-cpf").hide();
+        
+        if(tipo_cliente == "fisica"){
+            $("#group-id-nascimento").show();
+            $("#group-id-cpf").show();
+            $("#id_cnpj").val('');
+           
+       }else if(tipo_cliente == "juridica"){
+            $("#group-id-cnpj").show();
+            $("#id_cpf").val('');
+            $("#id_nascimento").val('');
+       }else{
+            $("#id_cnpj").val('');
+            $("#id_nascimento").val('');
+            $("#id_cpf").val('');
+       }
+    }
+
+    $("#id_tipo_cliente").change(function(){
+          verifica_tipo_cliente();
+    });  
+
+    verifica_tipo_cliente();
+});
+</script>
 {%endblock%}

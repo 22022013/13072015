@@ -100,7 +100,8 @@
     <script src="{% static 'plugins/select2/dist/js/select2.min.js' %}"></script>
 <script>
 jQuery(document).ready(function(){
-    
+    $("#id_cliente").select2();
+
     $("#limpa_data_inicio").click(function () {
            $("#id_data_inicio").val('');
     });
