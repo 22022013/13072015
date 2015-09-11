@@ -23,6 +23,17 @@ def clientes(request):
          
     return render(request, 'clientes.html',{'clientes': clientes})
 
+def get_clientes(request):
+    if request.method == 'GET':
+        clientes = Cliente.objects.filter(ativo=True)
+        clientes_dict = {}
+    
+        for cliente in clientes:
+            clientes_dict[cliente.id] = cliente.nome
+    
+        return HttpResponse(simplejson.dumps(clientes_dict))    
+
+
 @login_required
 #@group_required('Administrador','Auxiliar')
 def cliente_novo(request):

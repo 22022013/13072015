@@ -19,7 +19,8 @@ class TipoServico(models.Model):
 
     class Meta:
         db_table = u'tipo_servico'
-
+        ordering = ['nome']
+        
 class Servico(models.Model):
     '''
         @Servico: Modelo para servico
@@ -34,3 +35,4 @@ class Servico(models.Model):
 
     class Meta:
         db_table = u'servico'
+        ordering = ['nome']

@@ -16,7 +16,7 @@
 {%endblock%}
 {%block content%}
 
-
+<div id="modal-cliente" class="modal fade" role="dialog"  aria-hidden="true"></div>
 <div class="panel panel-inverse">
     <div class="panel-heading">
         <div class="panel-heading-btn">
@@ -77,7 +77,9 @@
                                    
                                 </script>
                             {%endif%}  
-                        
+                            {%if field.name == 'cliente'%}
+                                <a id="btn-novo_cliente" class="badge " >Cadastrar Cliente&nbsp;&nbsp;<i class="fa fa-plus"></i></a>
+                            {%endif%}
                         </div>
 
                     </div>
@@ -193,6 +195,13 @@ jQuery(document).ready(function(){
         verifica_status($(this).val());
         
     });
+     $('#btn-novo_cliente').on( 'click', function( e ){
+        e.preventDefault();
+        var url_novo_tipo = "{% url 'clientes:cliente_novo_modal' %}";
+        $('#modal-cliente').load( url_novo_tipo, function( e ){
+            $('#modal-cliente').modal( 'show' );
+        });
+    }); 
 });
 </script>
 {%endblock%}

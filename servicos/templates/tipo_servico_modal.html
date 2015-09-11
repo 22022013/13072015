@@ -10,6 +10,8 @@ jQuery(document).ready(function(){
             url: request_url,
             dataType: "json",
             success: function(json){
+                console.log(json);
+                console.log(typeof(json));
                 var options = "";
                 $.each(json, function(key, value){
                     options += '<option value="' + key + '">' + value + '</option>';

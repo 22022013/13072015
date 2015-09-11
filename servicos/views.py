@@ -133,11 +133,12 @@ def tipo_servico_novo_modal(request):
 def get_tipos_servico(request):
     if request.method == 'GET':
         tipos_servico = TipoServico.objects.filter(ativo=True)
+        
         tipo_servico_dict = {}
     
         for tipo_servico in tipos_servico:
             tipo_servico_dict[tipo_servico.id] = tipo_servico.nome
-    
+        
         return HttpResponse(simplejson.dumps(tipo_servico_dict))    
 
 def tipo_servico_editar(request,id):

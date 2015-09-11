@@ -1,12 +1,32 @@
 <script>
 
 jQuery(document).ready(function(){
+    function atualizar_listagem_clientes(){
+        
+        request_url ="{% url 'clientes:get_clientes' %}";
+              
+       $.ajax({
+            type: "GET",
+            url: request_url,
+            dataType: "json",
+            success: function(json){
+                var options = "";
+                $.each(json, function(key, value){
+                    options += '<option value="' + key + '">' + value + '</option>';
+                });
+                $('#id_cliente').html(options);
+            }
+        });
+
+    }   
+
     // Aplicando a mascara do CPF    
     $('#id_cpf').mask("999.999.999-99");
     // Aplicando a mascara do CPF    
     $('#id_cnpj').mask("99.999.999/9999-99");
     // Aplicando a mascara do Telefone    
     $("#id_telefone").mask("(99) 99999999?9");
+    $("#id_telefone2").mask("(99) 99999999?9");
     // Aplicando a mascara da Data     
     $("#id_nascimento").mask("99/99/9999");
 
@@ -57,13 +77,11 @@ jQuery(document).ready(function(){
             data: dataForm,
             dataType: "json",
             success: function (json) {
-                $(".has-error").removeClass("has-error");
+               $(".has-error").removeClass("has-error");
                 $("#erro").find(".cl_erro").remove();
                 // Percorrendo a lista recebida por JSON
-                $.each(json, function(key, value){                    
-                    
-                    
-                    
+                $.each(json, function(key, value){      
+                    $("#erro-"+key).find(".parsley-required").remove();              
                     if (!$("#erro").find("tr:gt(0)").html()){
                         $("#tb-erro").hide();
                     }    
@@ -73,18 +91,21 @@ jQuery(document).ready(function(){
                         // Exibindo Mensagem de Gravacao com Sucesso
                         setTimeout(function(){ $("#modal-body").html("<h2 class='alert alert-warning'>cliente gravado com Sucesso</h2>"); }, 500);
                         // Fechando o Modal e atualizando a Listagem conforme o Tipo de Exercicio
-                        $('#modal-novo_cliente').modal('hide');
-                        location.reload();                    
+                        $('#modal-cliente').modal('hide');
+                        atualizar_listagem_clientes();
+                                       
                     }else{
 
                         if (key == '__all__') {
                             $("#erro").append('<tr class="cl_erro"><td>Geral</td><td class="text-danger">'+value+'</td></tr>');
                             $("#tb-erro").show();
                         }else{
-                            group_id='#group-id-'+key
+                           group_id='#group-id-'+key
+                            id = "#id_"+key
+
                             $(group_id).addClass( "has-error");
-                            $("#erro").append('<tr class="cl_erro"><td>'+key+'</td><td class="text-danger">'+value+'</td></tr>');
-                            $("#tb-erro").show();
+                            $(id).addClass( "parsley-error");
+                            $("#erro-"+key).append(' <li class="parsley-required">'+value+'</li>');
                         }
                     } 
                  }); 
@@ -108,7 +129,7 @@ jQuery(document).ready(function(){
         
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 id="ModalLabel">Novo cliente</h4>
+            <h4 id="ModalLabel">Cadastrar Cliente</h4>
         </div>
         <div class="modal-body">
             <div id="tb-erro" class="panel panel-warning" style="display:none;" >
@@ -126,14 +147,16 @@ jQuery(document).ready(function(){
                     </table>
                 </div>
             </div>    
-            <form id="cliente_form" class="form-horizontal" role="form" method="post" action="{% url 'cliente:cliente_novo_modal' %}">
+            <form id="cliente_form" class="form-horizontal" role="form" method="post" action="{% url 'clientes:cliente_novo_modal' %}">
                 {% csrf_token %} 
                 {% for field in form %} 
                     <div class="form-group" id="group-id-{{ field.name }}">
                         <label for="id_{{ field.name }}" class="col-sm-2 control-label"> {{field.label}}</label>
                         <div class="col-sm-6">
                             {{field}}
-                                
+                            <ul class="parsley-errors-list filled" id="erro-{{field.name}}">
+                               
+                            </ul> 
                         </div>
                     </div>
                 {%endfor%}

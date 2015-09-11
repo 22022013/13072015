@@ -3,6 +3,7 @@
 from django.db import models
 from usuarios.models import Usuario
 from core.models import Notification
+
 class Funcao(models.Model):
     '''
         @Funcao: Modelo para uma nova funcao
